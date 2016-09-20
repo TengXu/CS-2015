@@ -1,0 +1,124 @@
+
+1.What's wrong with the following program? State as many errors as possible that (individually) would prevent the program from compiling without error:
+Public class test1 {
+  public static integer f( x ) {
+    if(x = 5)
+       x = 1;
+  }
+  public static void main [String[] argv] {
+  {
+    System.println('Hello World!')   
+  }
+)
+	(1). x is not defined
+	(2). the last ')' should be '}'
+	(3). there should be a ';' after 'System.println('Hello World!')'
+
+
+2.What would the following program print out?
+public class test2 {
+  public static void main (String[] argv)
+  {
+    System.out.println( (double) (int) 3.1415 ); 
+    int i = 10;
+    while (i >= 1)
+      System.out.println(i);
+      --i;
+  }
+}
+
+It will print out 3.0 first, and it will continue printing 10 and does not stop because '--i;' is not in the while loop.
+
+
+3.What would the following program print out?
+public class test3 {
+  
+  public static void main (String[] argv) 
+  {
+    int[] A = { 1, 1, 1, 1 };    // this initializes an array of length 4 with all values being 1
+    for(int i = 0; i < 4; ++i) {
+      for(int j = i-1; j >=0; --j) {
+         A[i] +=  A[j];
+      }
+    }
+    for(int i = 0; i < 4; ++i)
+      System.out.println(A[i]); 
+  }
+
+}
+Result: 
+1
+2
+4
+8
+
+
+4.What would the following program print out?
+public class test4 {
+  
+    public static void main (String[] argv) 
+    {
+        int[] A = { 1, 2, 3, 4, 5, 6 };    
+        for(int i = 0; i < A.length; ++i) {
+            if( A[i] % 2 == 0 )
+                continue;
+            else if( A[i] > 4 )
+                break;
+            else
+                A[i] *= 2;
+        }
+        for(int i = 0; i < A.length; ++i)
+            System.out.println(A[i]); 
+    }
+
+}
+Result:
+2
+2
+6
+4
+5
+6
+
+
+5.In the following program, for each name A, B, C, D, E, F, G of a variable or method, state the locations (1 to 9) which are in the scope of the variable. For example, for location A you would write "1 - 9" or "all".
+public class ScopeTest {
+
+    public static int A = 2;
+
+    // location 1
+
+    public static void B( int C ) {
+         // location 2
+    }
+
+    public static void main (String[] argv) 
+    {
+        // location 3
+        int D = 2;    
+        // location 4 
+        for( int E = 0; E < 10; ++E ) {
+            // location 5
+            if( D < A ) {
+                int F = 1;
+                // location 6
+            }
+            // location 7
+       }
+       // location 8
+    }
+
+// location 9
+
+  public static int G = 2;
+
+}
+
+A:1 - 9
+B:2 - 9
+C:2
+D:4 - 8
+E:5 - 7
+F:6
+G:1 - 9
+

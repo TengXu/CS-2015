@@ -1,0 +1,126 @@
+Hw 09
+Part A.
+1. split:[20, 12 ,6]
+   leaves:[ 4, 10, 15, 19, 25]	
+
+
+2. 
+1. 3
+2. 6
+3. 4
+4. 50
+5. 110 and 140 need 6 times
+6. 58/16 = 3.625
+
+
+3.
+(1).
+   8
+12
+   4
+     3
+A[12, 4, 8, 3]
+(2).
+   12
+12
+     4
+   8
+     3
+A[12, 8, 12, 3, 4]  n = 15
+(3).
+     5
+   7
+12
+     4
+   8
+     3
+A[12, 8, 7, 3, 4, 5] m = 12
+(4). k = 14
+
+
+4.
+  A.{
+0
+1
+2  38, diapers
+3  1, eggs 15, beer
+4
+5  4£¬apples
+6  2, bread
+
+worst case time: 2
+average time: 1.2
+    }
+  B.
+0  63, sugar -> 21, chicken
+1
+2  38, diapers
+3  29, flour
+4  41, pears
+5  4£¬apples -> 25, beef
+6  
+
+delete(1, eggs)
+delete()
+delete(2, bread)
+delete()
+delete(15, beer)
+  C.
+worst case time: 2
+average time: 1.286
+  D. keys: 21, 77, 70, 7, 14, 28
+  E. Theta(M)
+  F. Theta(M/N)
+
+
+5.
+A. 
+L:
+0
+1  4
+2  
+3  1
+4  
+5  
+6  2
+7  28
+8  
+9
+10
+
+B. 1
+
+C. 
+L:
+0
+1  4     
+2  63
+3  1
+4  23
+5  19
+6  2
+7  28
+8  13
+9
+10
+
+D. 4
+
+E. 1.75
+
+F.
+L:
+0
+1  4     
+2  63
+3  -1
+4  5
+5  19
+6  2
+7  28
+8  13
+9
+10
+
+G. the worst case is when inserting all the keys into the same bucket
+for the nth number Theta(n)

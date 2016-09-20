@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class WordPalindromeTest { 
+  
+  public static void main(String[] args) {
+       Scanner userInput = new Scanner(System.in);
+
+    char[] charsToRemove = { '.' ,',', ':', ';', '!', '?', '"','\'' , '/', '-', '(', ')', '~'};
+    System.out.println("\nType in a sentence or Control-d to end:"); 
+    while(userInput.hasNextLine()) {
+      
+       String line = userInput.nextLine();
+       line = line.toLowerCase();
+       
+       for(int x = 0; x < charsToRemove.length; x++){
+         String y = Character.toString(charsToRemove[x]);
+         line = line.replace(y, "");
+       }
+       
+       String copyline = line;
+       for(int x = 0; x < (line.length()); x++){
+         String numone = Character.toString(line.charAt(x)); 
+         String numtwo = Character.toString(copyline.charAt(line.length() - 1 - x));   
+         if( numone.equals(numtwo)){
+           if(x == line.length() - 1 )
+              System.out.println("Palindrome!");
+         }
+         else{
+           System.out.println("Not a palindrome!");
+           break;
+    
+  }
+}

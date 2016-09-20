@@ -1,0 +1,317 @@
+/* File: SymbolTable.java
+ * Author: Teng Xu
+ * Date: 3/19/16
+ * Purpose: This is the template for HW 07, containing only the unit test and Node definition 
+ */
+
+public class SymbolTable<Value> {
+    
+  
+  private class Node {               
+    String variable;
+    Value value;
+    Node next;
+    
+    public Node() {}
+    
+    public Node(String k, Value v) {
+      variable = k; value = v; next = null;
+    }
+    
+    public Node(String k, Value v, Node p) {
+      variable = k; value = v; next = p;
+    }
+  }
+  
+  private Node head = null; 
+  
+  // Your code here!!
+  
+  public void put(String var, Value val) {
+      head = putHelper(var, val, head);
+ }
+ 
+  private Node putHelper( String var, Value val, Node p ) {
+    if(contains(var) == false){
+      if(p == null) 
+        return new Node(var, val);
+      else if(var.compareTo(p.variable) < 0)
+        return new Node(var, val, p);
+      else {
+       p.next = putHelper( var, val, p.next ); 
+       return p;
+      }
+    }
+    else{
+    if(p == null) 
+       return new Node(var, val);
+    else if(p.variable == var){
+      p.value = val;
+      return p;
+    }
+    else {
+       p.next = putHelper( var, val, p.next ); 
+       return p;
+    }
+  }
+  }
+
+//     If the variable var is not in the symbol table, insert a new
+//     node containing var and val into the linked list in ascending order
+//     (do NOT sort the list, but insert in order of the variable field); if var is already in
+//     the table, then simply replace the existing value with the new value val. 
+//     The type Value is a generic type.
+    
+  public boolean contains(String var) {
+    return containshelper(var, head);
+  }
+    
+  private boolean containshelper(String var, Node p) {
+    if(p.variable == var)
+      return true;
+    else if(p == null)
+      return false;
+    else{
+      return containshelper(var, p.next);
+    }
+  }
+  
+  private String toString(){
+    
+  }
+  public static void main(String[] args) {
+    
+    
+    SymbolTable<Integer> S = new SymbolTable<Integer>(); 
+    
+    
+ /*  Use step-wise refinement to develop the methods one at a time as you get to them
+  *  in the following performance tests, and then move the "/*" down, to uncover more
+  *  and more tests.
+  *  Note: You will need to write the toString() method FIRST in order to run these
+  *        performance tests. 
+  
+
+    // Insert three (key,value) pairs and test basic methods
+  
+    
+    S.put("a",3); 
+    S.put("c",1);
+    S.put("b",1);
+    
+    System.out.println("\n[1] Should print out:\n(a,3) : (b,1) : (c,1) "); 
+    System.out.println(S); 
+    
+    System.out.println("\n[2] Should print out:\n3"); 
+    System.out.println(S.size()); 
+    
+    System.out.println("\n[3] Should print out:\nfalse"); 
+    System.out.println(S.isEmpty()); 
+    
+    System.out.println("\n[4] Should print out:\n1");  
+    String testKey = "c"; 
+    try {
+      System.out.println(S.get(testKey)); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key " + testKey + " does not exist!"); 
+    }
+    
+    System.out.println("\n[5] Should print out:\nKey d does not exist!");  
+    testKey = "d"; 
+    try {
+      System.out.println(S.get(testKey)); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key " + testKey + " does not exist!"); 
+    }
+    
+    System.out.println("\n[6] Should print out:\n(a,3) : (b,1) : (c,4) "); 
+    S.put("c",4);
+    System.out.println(S);    
+    
+    System.out.println("\n[7] Should print out:\ntrue"); 
+    System.out.println(S.contains("c"));  
+    
+    System.out.println("\n[8] Should print out:\ntrue"); 
+    System.out.println(S.contains("a")); 
+    
+    System.out.println("\n[9] Should print out:\nfalse"); 
+    System.out.println(S.contains("e"));  
+    
+    S.delete("a"); 
+    S.delete("d"); 
+    S.delete("c"); 
+    System.out.println("\n[10] Should print out:\n(b,1)");     
+    System.out.println(S); 
+    
+    System.out.println("\n[11] Should print out:\n0");  
+    S.delete("b"); 
+    System.out.println(S.size()); 
+    
+    System.out.println("\n[12] Should print out:\nnope! nope! nope! nope! nope!");  
+    try{
+      System.out.println(S.min()); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.print("nope! "); 
+    }
+    
+    try{
+      System.out.println(S.max()); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.print("nope! "); 
+    }
+    try{
+      System.out.println(S.floor("a")); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.print("nope! "); 
+    }
+    try{
+      System.out.println(S.ceiling("a")); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.print("nope! "); 
+    }
+    
+    
+    try{
+      System.out.println(S.select(0)); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("nope! "); 
+    }
+    
+    
+    
+    SymbolTable<String> T = new SymbolTable<String>(); 
+    
+    T.put("09:00:00","Chicago");
+    T.put("09:00:03","Phoenix");
+    T.put("09:00:13","Houston");
+    T.put("09:00:59","Chicago"); 
+    T.put("09:36:14","Seattle");
+    T.put("09:37:44","Phoenix");
+    T.put("09:10:25","Seattle");
+    T.put("09:14:25","Phoenix");
+    T.put("09:19:32","Chicago");
+    T.put("09:19:46","Chicago");
+    T.put("09:21:05","Chicago");
+    T.put("09:22:43","Seattle");
+    T.put("09:01:10","Houston");
+    T.put("09:03:13","Chicago");
+    T.put("09:10:11","Seattle");
+    T.put("09:25:52","Chicago");
+    T.put("09:22:54","Seattle");  
+    T.put("09:35:21","Chicago");
+    
+    System.out.println("\n[13] Should print out:\n(09:00:00,Chicago) : (09:00:03,Phoenix) : (09:00:13,Houston) : (09:00:59,Chicago) : (09:01:10,Houston) : (09:03:13,Chicago) : (09:10:11,Seattle) : (09:10:25,Seattle) : (09:14:25,Phoenix) : (09:19:32,Chicago) : (09:19:46,Chicago) : (09:21:05,Chicago) : (09:22:43,Seattle) : (09:22:54,Seattle) : (09:25:52,Chicago) : (09:35:21,Chicago) : (09:36:14,Seattle) : (09:37:44,Phoenix)");      
+    System.out.println("\n" + T);    
+      
+    try{
+      System.out.println("\n[14] Should print out:\n09:00:00");
+      System.out.println(T.min()); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:00:00 does not exist!"); 
+    } 
+    try{
+      System.out.println("\n[15] Should print out:\n09:37:44");
+      System.out.println(T.max()); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:37:44 does not exist!"); 
+    } 
+    
+    try{
+      System.out.println("\n[16] Should print out:\n09:03:13");
+      System.out.println(T.floor("09:05:00")); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:05:00 does not exist!"); 
+    } 
+    
+    try{
+      System.out.println("\n[17] Should print out:\n09:35:21");
+      System.out.println(T.floor("09:35:21")); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:35:21 does not exist!"); 
+    }
+    
+    try{
+      System.out.println("\n[18] Should print out:\n09:35:21");
+      System.out.println(T.ceiling("09:30:00")); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:35:21 does not exist!"); 
+    } 
+    
+    try{
+      System.out.println("\n[19] Should print out:\n09:00:00");
+      System.out.println(T.ceiling("09:00:00")); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:00:00 does not exist!"); 
+    }
+    
+    try{
+      System.out.println("\n[20] Should print out:\n09:10:25");
+      System.out.println(T.select(7)); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Key 09:10:25 does not exist!"); 
+    } 
+    
+    
+    System.out.println("\n[21] Should print out:\n7");
+    System.out.println(T.rank("09:10:25")); 
+    
+    System.out.println("\n[22] Should print out:\n15");
+    System.out.println(T.rank("09:30:00"));     
+    
+    System.out.println("\n[23] Should print out:\n5");
+    System.out.println(T.size("09:15:00", "09:25:00")); 
+    
+    try {
+      System.out.println("\n[24] Should print out:\n18 18");
+      System.out.println(T.size() + " " + T.size(T.min(), T.max())); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Symbol table empty!"); 
+    }
+    
+    try {   
+      System.out.println("\n[25] Should print out:\n09:00:03");
+      T.deleteMin(); 
+      System.out.println(T.min()); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Symbol table empty!");
+    }
+    
+    try {   
+      System.out.println("\n[26] Should print out:\n09:36:14");
+      T.deleteMax(); 
+      System.out.println(T.max()); 
+    }
+    catch(KeyNotFoundException e) {
+      System.out.println("Symbol table empty!");
+    }
+    
+    
+    System.out.println("\n[27] Should print out:\n16");
+    System.out.println(T.size()); 
+    
+    
+ */   
+    
+  }
+}
+
+
+class KeyNotFoundException extends Exception {}
+
+

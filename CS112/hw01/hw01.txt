@@ -1,0 +1,51 @@
+Part A: Analytical Problems
+
+Solutions are all in the pictures.
+
+Give the following: log2(1) and log2(64) and log2(1024).
+
+For which values of N is log2(N) = floor( log2(N) ) ?
+	1, 64 and 1024
+For which values of N is (floor( log2(N) ) + 1) = ceiling( log2(N) ) ?
+	none of N 
+True or false? For every integer N > 0, we have N > log2(N). If false, explain why.
+	True
+True or false? The function log2(N) is the inverse function of the "exponential" function 2N (Google "inverse function" if you don't recall the definition)?
+	True
+True or false? For every integer N > 0 and any K, we have log2(NK) = K*log2(N).
+	True
+True or false? The assignment double x = (double) 4; is an example of a narrowing conversion.
+	False
+True or false? In the boolean expression ( A && B ) || ( !A && B), the expression B will never be evaluated.
+	False
+Which of the following will create an error because of a misuse of types?
+      (a)  int n = 3 + '3';
+	'3' is a char, not a integer
+      (b)  double x = (3.4 + (int) 2.1) * "3";
+	"3" is a string
+      (c)  String s = "hi" + 5 + 't' + true + "there";
+	true is boolean
+	5 is integer
+    
+What will the following code print out?
+  int n = 1;
+  int m = ++n;
+  ++m;
+  --n;
+  n += m--;
+  m -= n++;
+  System.out.println("n = " + n + "  m = " + m);
+
+	n = 5 m = -2  
+
+Consider the ordered list of integers presented in lecture on Tuesday 1/19. During binary search, which numbers will take 3 comparisons to find (i.e., search for and return "Found!")?
+	2,12,25,45
+
+Again, considering binary search on the same list, will all unsuccessful searches (i.e., searching for a number not in the list) take the same number of comparisons (count only comparisons between n and a number in the list, not comparisons used to control the loop)? If not, give an example of two numbers (neither in the list) which prove your answer, and give the number of comparisons to do an unsuccessful search on each.
+	Yes
+
+For the exact unordered list present in lecture on Tuesday 1/19 and linear search, what is the average number of comparisons to search for the even numbers in the list only (assume each even number is searched for once)?
+	4.8
+
+Consider the following unordered list of integers: [ 2, 6, 3, 8, 6, 1, 3, 9, 3, 2]. What is the average number of comparisons to search for each of the numbers which occurs in the list?
+	1: 6      2: 5.5      3: 6.3     6: 3.5       8: 4       9: 8

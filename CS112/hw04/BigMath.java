@@ -1,0 +1,295 @@
+/* File: BigMath.java
+ * Date: 2/11/16
+ * Author:  Wayne Snyder (waysnyder@gmail.com)
+ * Class: CS 112, Spring 2016
+ * Homework: HW 04, Problem B2
+ * Purpose: This is a template for the BigMath class.   
+ */
+
+import java.util.Arrays;
+
+public class BigMath{ 
+
+    public static boolean debug = false;  
+    public static void db(String s){            
+          if(debug) 
+             System.err.println("\t" + s);     
+      }
+       
+    public static final int SIZE = 60;  
+    
+    public static int compare(BigInt N, BigInt M) {
+        if(N.length() > M.length())
+          return 1;
+        else if(N.length() < M.length())
+          return -1;
+        else{
+          for(int i = 0;i<N.length(); i++){
+            if(N.digitAt(i) > M.digitAt(i))
+              return 1;
+            else if(N.digitAt(i) < M.digitAt(i))
+              return -1;            
+          }
+        }
+        return 0; 
+    }
+    
+    public static boolean equals(BigInt N, BigInt M) {
+      if(compare(N, M) == 0)
+        return true;
+      return false;
+    }
+    
+    public static BigInt add(BigInt A, BigInt B) {
+        
+        IntStack SA = new IntStack(SIZE);    // stack to hold digits of A
+        IntStack SB = new IntStack(SIZE);    // stack to hold digits of B
+        IntStack SS = new IntStack(SIZE);    // stack to hold the digits of the sum of A and B 
+        int carry = 0; 
+        
+        //db("A: "+A);
+        //db("B: "+B);
+        for(int i = 0;i < A.length(); i++){
+          SA.push(A.digitAt(i));
+        }
+        for(int i = 0;i < B.length(); i++)
+          SB.push(B.digitAt(i));
+        do
+        {
+          int s = SA.pop();
+          int t = SB.pop();
+          //db("s "+s+"t "+t);
+          if( s + t + carry> 9){
+            SS.push(s + t + carry - 10);
+            carry = 1;            
+          }
+          else{
+            SS.push(s + t + carry);
+            carry = 0;
+          }
+         }while(SA.isEmpty() == false && SB.isEmpty() == false);   
+        if(SA.isEmpty() && (SB.isEmpty() == false)){
+          do{
+          int t = SB.pop();
+          if(carry + t > 9){
+            SS.push(carry + t - 10);
+            carry = 1;
+          }
+          else{
+            SS.push(t + carry);
+            carry = 0;
+          }         
+          }while(SB.isEmpty() == false);
+        }
+        if(SB.isEmpty() && (SA.isEmpty() == false)){
+          do{
+          int s = SA.pop();
+          if(carry + s > 9){
+            SS.push(carry + s - 10);
+            carry = 1;
+          }
+          else{
+            SS.push(s + carry);
+            carry = 0;
+          }    
+          }while(SA.isEmpty() == false);
+        }
+        if(SA.isEmpty() && SB.isEmpty()){
+          if(carry == 1)
+            SS.push(1);
+        }
+        BigInt b = new BigInt();       
+        int[] a = new int[SS.size()];
+        int i = 0;
+        do{
+          a[i] = SS.pop();
+          i++;
+        }while(SS.isEmpty() == false);        
+        //db("a: "+ Arrays.toString(a));        
+        b.putValue(a);              
+        return b; 
+    }
+    
+    
+    private static BigInt multByInt(BigInt N, int m) {
+      IntStack A = new IntStack(SIZE); 
+      IntStack P = new IntStack(SIZE);      
+      int sum = 0;
+      int carry = 0;
+      for(int i = 0;i < N.length(); i++){
+          A.push(N.digitAt(i));
+        }        
+      do{
+        int a = A.pop();
+        sum = a * m + carry;
+        carry = sum / 10;
+        P.push(sum % 10);        
+      }while(A.isEmpty() == false);
+      
+      if(carry > 0)
+        P.push(carry); 
+      
+        BigInt b = new BigInt();    
+        int[] a = new int[P.size()];
+        int i = 0;
+        do{
+          a[i] = P.pop();
+          i++;
+        }while(P.isEmpty() == false);
+        
+        //db("a: "+ Arrays.toString(a));        
+        b.putValue(a);                
+        return b; 
+    }
+    
+    public static BigInt mult(BigInt O, BigInt M) {
+      IntStack S = new IntStack(SIZE); 
+      BigIntStack P = new BigIntStack(SIZE);
+      BigInt N = new BigInt();
+      N.putValue(O.toString());
+      int carry = 0;
+      db("N: "+N.toString()+" M: "+M.toString());
+      for(int i = 0;i < M.length(); i++){
+          S.push(M.digitAt(i));
+      }
+      db("S: "+S.toString());
+      do{
+        int s = S.pop();
+        db("s: "+s);
+        P.push(multByInt(N, s));
+        db("P: "+P.toString());
+        db("N: "+N.toString());
+        N.putValue(N.toString() + "0");        
+      }while(S.isEmpty() == false);      
+      
+      BigInt a = new BigInt();
+      BigInt b = new BigInt();    
+      do{
+      b = P.pop();
+      a = add(a, b);         
+      }while(P.isEmpty() == false);   
+      db("M: "+M.toString());
+      
+
+      return a;        
+    }
+    
+    
+    public static void main(String [] args) {
+        
+        System.out.println("\nUnit Test for BigMath Class");
+        
+        BigInt A = new BigInt("9999");
+        
+        BigInt B = new BigInt(1);
+        
+        int[] c = {1,8,2,7};
+        BigInt C = new BigInt(c);
+        
+        BigInt D = new BigInt(234);
+        BigInt E = new BigInt(235);
+        BigInt F = new BigInt(9999);
+        BigInt Z = new BigInt(0);
+        
+        System.out.println("\nTest 1: Should be:\n4 9999");
+        System.out.println( A.length() + " " + A );
+        
+        System.out.println("\nTest 2: Should be:\n1 1");
+        System.out.println( B.length() + " " + B );
+        
+        System.out.println("\nTest 3: Should be:\n4 1827");
+        System.out.println( C.length() + " " + C );
+        
+        System.out.println("\nTest 4: Should be:\n3 234");
+        System.out.println( D.length() + " " + D );
+        
+        System.out.println("\nTest 5: Should be:\n-1");
+        System.out.println( compare(D,E) );
+        
+        System.out.println("\nTest 6: Should be:\n1");
+        System.out.println( compare(E,D) );
+        
+        System.out.println("\nTest 7: Should be:\n1");
+        System.out.println( compare(C,D) );
+        
+        System.out.println("\nTest 8: Should be:\n-1");
+        System.out.println( compare(D,C) );
+        
+        System.out.println("\nTest 9: Should be:\n1");
+        System.out.println( compare(A,Z) );
+        
+        System.out.println("\nTest 10: Should be:\n-1");
+        System.out.println( compare(Z,A) );
+        
+        BigInt G = new BigInt(9999);        
+        System.out.println("\nTest 11: Should be:\n0 true");
+        System.out.println( compare(A,G) + " " + equals(A,G) );
+        
+        System.out.println("\nTest 12: Should be:\n-1 false");
+        System.out.println( compare(E,F) + " " + equals(F,E) );
+        
+        System.out.println("\nTest 13: Should be:\n2");
+        System.out.println( add(B,B) );
+        
+        System.out.println("\nTest 14: Should be:\n1827");
+        System.out.println( add(C,Z) );
+        
+        System.out.println("\nTest 15: Should be:\n1827");
+        System.out.println( add(Z,C) );
+        
+        System.out.println("\nTest 16: Should be:\n0");
+        System.out.println( add(Z,Z) );
+        
+        System.out.println("\nTest 17: Should be:\n10000");
+        System.out.println( add(A,B) );
+        
+        System.out.println("\nTest 18: Should be:\n10000");
+        System.out.println( add(B,A) );
+        
+        System.out.println("\nTest 19: Should be:\n2061");
+        System.out.println( add(C,D) );
+        
+        System.out.println("\nTest 20: Should be:\n2061");
+        System.out.println( add(D,C) );
+        
+        System.out.println("\nTest 21: Should be:\n469");
+        System.out.println( add(E,D) );
+        
+        System.out.println("\nTest 22: Should be:\n469");
+        System.out.println( add(D,E) );  
+        
+        System.out.println("\nTest 23: Should be:\n1827");
+        System.out.println( multByInt(C,1) ); 
+        
+        System.out.println("\nTest 24: Should be:\n3654");
+        System.out.println( multByInt(C,2) );
+        
+        System.out.println("\nTest 25: Should be:\n0");
+        System.out.println( multByInt(Z,8) );
+        
+        System.out.println("\nTest 26: Should be:\n99990");
+        System.out.println( multByInt(A,10) );
+        
+        System.out.println("\nTest 27: Should be:\n4");
+        BigInt Two = new BigInt(2); 
+        db(Two.toString());
+        System.out.println( mult(Two,Two) );
+        
+        System.out.println("\nTest 28: Should be:\n468  468");
+        System.out.println( mult(D,Two) + "  " + mult(Two,D));
+        
+        System.out.println("\nTest 29: Should be:\n54990  54990");
+        System.out.println( mult(D,E) + "  " + mult(E,D));
+        
+        System.out.println("\nTest 30: Should be:\n2339766  2339766");
+        System.out.println( mult(D,A) + "  " + mult(A,D));
+        
+        System.out.println("\nTest 31: Should be:\n1013459064417062778220931703313214582990003217000");
+        BigInt T = mult(A, mult( B, mult( C, mult( D, mult ( E, F ) ) ) ) ); 
+        System.out.println( mult( T, mult( T, T ) ) );
+    }
+    
+    
+}
+
+

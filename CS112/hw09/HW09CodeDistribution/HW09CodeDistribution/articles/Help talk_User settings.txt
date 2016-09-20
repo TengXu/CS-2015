@@ -1,0 +1,3 @@
+Help talk:User settings
+I think that it's hard to understand what some of the phrases on the page Preferences mean. Should we change these to be in Simple English Wikipedia Simple English?
+I agree but this isn't something we have control over. It's part of the software. I'm not even sure a developer can change it easily. The solution is to make the help page at preferences better. Angela

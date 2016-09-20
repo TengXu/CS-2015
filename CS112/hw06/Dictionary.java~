@@ -1,0 +1,412 @@
+/* File: Dictionary.java
+ * Author: Teng Xu
+ * Date: 2/26/2016
+ * Purpose: This is a template for HW06, Problem B.2 for CS 112. 
+ */
+
+import java.util.Arrays;
+public class Dictionary { 
+    
+    // basic definition of the Pair class; this is an "inner class" inside class Dictionary
+    
+    private class Pair {
+        String key;
+        String[] value;
+        
+        public Pair() { } 
+        
+        public Pair(String k, String[] v) {
+            key = k;
+            value = v;
+        }
+        
+        public String toString() { 
+            String a = "";
+            a += key + ": ";
+            a += "[" + value[0];
+            for(int i = 1 ;i < value.length;i++)
+              a +=  "," + value[i];
+            a += "]";
+            return a;
+        }
+        
+    }
+    
+    private int LENGTH = 10 ;
+    private Pair[] A = new Pair[LENGTH];
+    private int next = 0;    
+    private int size = 0;
+
+    private void resize(){
+      Pair[] B = new Pair[LENGTH * 2]; 
+      for(int i = 0; i < A.length; i++)
+        B[i] = A[i];     
+      LENGTH *= 2;  
+      A = B;
+    }
+        
+    public void insertStudent(String k, String[] val)  {
+      if(location(k , 0, 9) == -1){       
+        Pair a = new Pair(k, val);
+        if(size == A.length)
+          resize();
+        for(int i = 0; i < size; i++){         
+          if(A[i].key.compareTo(k) >= 0){  
+            Pair b = A[i];
+            A[i] = a;
+            size++;      
+            next++;
+            for(int c = size - 1;c > i; c--){
+              A[c] = A[c-1];
+            }
+            A[i + 1] = b;
+            break;
+          } 
+          else if(i == size - 1){
+            A[size] = a;
+            size++;
+            next++;            
+            break;
+          }
+        }
+        if(size == 0){
+          A[0] = a;
+          size++;
+          next++;          
+        }
+      }
+      else{
+        A[location(k , 0, 9)].value = val;
+      }
+    }      
+  
+       public String[] lookupClasses(String k) throws KeyNotFoundException {
+       if(location(k , 0, 9) == -1)
+         throw new KeyNotFoundException();
+       else{
+         return A[location(k , 0, 9)].value;
+       }
+     }
+    
+  
+     public boolean member(String k) {
+       if(location(k, 0, 9) == -1)
+         return false;
+       return true;
+     }
+
+
+  
+     public void deleteStudent(String k) {
+       int a = location(k, 0, 9);
+       if(a != -1){
+         A[a] = A[a + 1];
+         for(int i = a; i < size; i++){
+           A[i] = A[i+1];
+         }
+         size--;
+         next--;
+       }
+     }
+
+  
+       public void dropClass(String k, String c) {
+         int a = location(k, 0, 9);
+         if(a != -1){
+           if(memberArray(c, A[a].value)){
+           String[] b = new String[A[a].value.length - 1];
+           for(int i = 0; i < A[a].value.length - 1;i++){
+             if(A[a].value[i] != c)
+               b[i] = A[a].value[i];
+             else{
+               for(int d = i; d < A[a].value.length - 1;d++)
+                 b[d] = A[a].value[d + 1];
+               break;
+             }
+           }
+           A[a].value = b;
+           }
+         }
+     }
+
+       public void addClass(String k, String c) {
+         int a = location(k, 0, 9);
+         if(a == -1){
+           String[] b = new String[1];
+           b[0] = c;
+           insertStudent(k , b);
+         }
+         else if(a != -1 && (memberArray(c, A[a].value) == false)){
+           String[] b = new String[A[a].value.length + 1];
+           for(int i = 0; i < A[a].value.length;i++){
+             b[i] = A[a].value[i];
+             }
+           b[A[a].value.length] = c;
+           A[a].value = b;
+           }           
+         }
+     
+
+       private boolean enrolled(String k, String c){
+       int a = location(k, 0, 9);
+       if(a == -1)
+         return false;
+       if(memberArray(c, A[a].value))
+         return true;
+       return false;
+       }
+     
+
+
+
+       public int size(){
+       return size;
+     }
+
+
+       public boolean isEmpty(){
+       return(size == 0);
+     }
+
+
+    private int location(String k, int lo, int hi) {
+        lo = 0;
+        hi = size - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if(A[mid].key.compareTo(k) > 0)
+              hi = mid - 1;
+            else if (A[mid].key.compareTo(k) < 0)
+              lo = mid + 1;
+            else 
+              return mid;
+        }
+        return -1;     
+    }
+     
+    private boolean memberArray(String k, String[] C) {
+      for(int i = 0; i < C.length; i++){
+        if(C[i] == k)
+          return true;
+      }
+        return false;
+    }     
+    
+    
+    // this is used in the unit test
+    
+    private void printDictionary() {
+      for(int i = 0; i < next; ++i){
+          System.out.println(i + ": " + A[i]);
+      }
+    }
+
+
+  private int nextPair = 0;                  // index into array A pointing to next pair to be enumerated when nextPair is called
+  private int nextStudent = 0;               // ditto but for when nextStudent(....) is called
+  private String className;                  // class the student iterator is enumerating the class list for
+
+  public void initPairIterator(){
+    nextPair = 0;
+  }
+
+  public boolean hasNextPair() {
+    if(nextPair < size)
+      return true;
+    return false;
+  }
+
+  public String nextPair(){
+    Pair a = A[nextPair];
+    nextPair++;
+    return a.toString();
+  }
+
+  public void initStudentIterator(String c) { 
+    nextStudent = 0;
+    className = c;
+  }
+ 
+  public boolean hasNextStudent() { 
+    if(nextStudent < size){
+      for(int i = nextStudent; i<size; i++){
+        if(memberArray(className, A[i].value)){
+          nextStudent = i;
+          return true;
+        }
+      }
+    }
+    return false;    
+  }
+
+  public String nextStudent() { 
+    for(int i = nextStudent; i < size; i++){
+      nextStudent++;
+      if(memberArray(className, A[i].value))
+        return A[i].toString();
+    }     
+    nextStudent++;
+    return A[nextStudent].toString();
+  }
+//
+//       Return the name of the student that nextStudent is indicating. 
+//       [Hint: Similar to last, but you'll need to scan through the array to look for the next pair that has className in the value array.]    
+    
+    public static void main(String[] args) {
+        
+        Dictionary D = new Dictionary(); 
+        
+        // Insert three (key,value) pairs and test basic methods
+        
+        String[] A = { "CS111", "CS131", "WR99", "EC101" };
+        String[] B = { "CS111", "MA123", "WR100", "SO100" };
+        String[] C = { "CS111", "MA294", "WR150", "CL212" };
+        String[] E = { "CS350", "CS235", "EC101", "MU101" };
+        String[] F = { "CS111", "MA124", "BI108", "SO105" };
+        String[] G = { "CS591", "MA442", "EN212", "EC101" };
+ 
+
+        D.insertStudent("Christie,Chris",A); 
+        D.insertStudent("Carson,Ben", B);
+        D.insertStudent("Trump,Donald", C);
+        D.insertStudent("Kasich,John",E); 
+        D.insertStudent("Cruz,Ted", F);
+        D.insertStudent("Bush,Jeb", G);
+        
+        System.out.println("\n[1] Should print out:"); 
+        System.out.println("0: Bush,Jeb: [CS591,MA442,EN212,EC101]");
+        System.out.println("1: Carson,Ben: [CS111,MA123,WR100,SO100]");
+        System.out.println("2: Christie,Chris: [CS111,CS131,WR99,EC101]");
+        System.out.println("3: Cruz,Ted: [CS111,MA124,BI108,SO105]");
+        System.out.println("4: Kasich,John: [CS350,CS235,EC101,MU101]");
+        System.out.println("5: Trump,Donald: [CS111,MA294,WR150,CL212]\n");
+        
+        D.printDictionary();  
+     
+        System.out.println("\n[2] Should print out:\n6"); 
+        System.out.println(D.size()); 
+        
+        System.out.println("\n[3] Should print out:\nfalse"); 
+        System.out.println(D.isEmpty()); 
+        
+        System.out.println("\n[4] Should print out:\ntrue"); 
+        System.out.println(D.member("Cruz,Ted")); 
+        
+        System.out.println("\n[5] Should print out:\nfalse"); 
+        System.out.println(D.member("Jindal,Bobby")); 
+        
+        D.deleteStudent("Bush,Jeb");
+        D.deleteStudent("Christie,Chris");
+        System.out.println("\n[6] Should print out:\nfalse  false"); 
+        System.out.println(D.member("Bush,Jeb") + "  " + D.member("Christie,Chris")); 
+        
+        System.out.println("\n[7] Should print out:\n[CS111, MA123, WR100, SO100]"); 
+        String name = "Carson,Ben";
+        try {
+            System.out.println(Arrays.toString(D.lookupClasses(name))); 
+        }
+        catch(KeyNotFoundException e) {
+            System.err.println("Key not found: " + name);
+        }
+        
+        name = "Jindal,Bobby";
+        System.out.println("\n[8] Should print out:");
+        System.err.println("Key not found: " + name); 
+        try {
+            System.out.println(Arrays.toString(D.lookupClasses(name))); 
+        }
+        catch(KeyNotFoundException e) {
+            System.err.println("Key not found: " + name);
+        }
+        
+        System.out.println("\n[9] Should print out:\n[CS111, WR100, SO100]");  
+        D.dropClass("Carson,Ben", "MA123");
+        D.dropClass("Carson,Ben", "EC102"); 
+        try {
+            System.out.println(Arrays.toString(D.lookupClasses("Carson,Ben"))); 
+        }
+        catch(KeyNotFoundException e) {
+            System.err.println("Key not found: Carson,Ben");
+        } 
+        
+        System.out.println("\n[10] Should print out:\n[CS111, MA294, WR150, CL212, CS591]");  
+        D.addClass("Trump,Donald", "CS591");
+        D.addClass("Trump,Donald", "WR150"); 
+        try {
+            System.out.println(Arrays.toString(D.lookupClasses("Trump,Donald"))); 
+        }
+        catch(KeyNotFoundException e) {
+            System.err.println("Key not found: Carson,Ben");
+        } 
+        
+        System.out.println("\n[11] Should print out:\nfalse  true"); 
+        D.dropClass("Walker,Scott","PH150");
+        System.out.print(D.member("Walker,Scott") + "  " );
+        D.addClass("Walker,Scott","PH110"); 
+        System.out.println(D.member("Walker,Scott"));   
+        
+        System.out.println("\n[12] Should print out:\ntrue"); 
+        System.out.println(D.enrolled("Trump,Donald", "CS591"));  
+        
+        System.out.println("\n[13] Should print out:\nfalse"); 
+        System.out.println(D.enrolled("Trump,Donald", "CS101"));        
+        
+        // testing iterators       
+        
+        System.out.println("\n[14] Should print out:");
+        System.out.println("0: Carson,Ben: [CS111,WR100,SO100]");
+        System.out.println("1: Cruz,Ted: [CS320,MA124,BI108,SO105]");
+        System.out.println("2: Kasich,John: [CS350,CS235,EC101,MU101]");
+        System.out.println("3: Trump,Donald: [CS210,MA294,WR150,CL212,CS591]");
+        System.out.println("4: Walker,Scott: [PH110]\n");
+        D.printDictionary(); 
+        
+        System.out.println("\n[15] Should print out same but without index numbers:");
+        D.initPairIterator(); 
+        
+        while(D.hasNextPair()) {
+            System.out.println(D.nextPair());
+        }
+        System.out.println("\n[16] Should print out:\nCarson,Ben: [CS111,WR100,SO100]");
+        D.initPairIterator(); 
+        System.out.println(D.nextPair());
+        
+        System.out.println("\n[17] Should print out:");  
+        D.initStudentIterator("CS111");
+        System.out.println("Carson,Ben: [CS111,WR100,SO100]");
+        System.out.println("Cruz,Ted: [CS111,MA124,BI108,SO105]");
+        System.out.println("Trump,Donald: [CS111,MA294,WR150,CL212,CS591]\n");
+        
+        while(D.hasNextStudent()) {
+            System.out.println(D.nextStudent());
+        }
+        
+        System.out.println("\n[18] Should print out:\nTrump,Donald: [CS111,MA294,WR150,CL212,CS591]");
+        D.initStudentIterator("CL212"); 
+        
+        while(D.hasNextStudent()) {
+            System.out.println(D.nextStudent());
+        } 
+        
+        System.out.println("\n[19] Testing resizing; should print out a dictionary with 14 pairs.\n"); 
+        D.insertStudent("Clinton, Hillary",A); 
+        D.insertStudent("Sanders,Bernie", B);
+        D.insertStudent("Lincoln,Abraham", C);
+        D.insertStudent("Kennedy,John",E); 
+        D.insertStudent("Bush,George", F);
+        D.insertStudent("Reagan,Ronald", G);
+        D.insertStudent("Nixon,Dick",A); 
+        D.insertStudent("Carter,Jimmy", B);
+        D.insertStudent("Johnson,Lyndon", C);
+ 
+        D.printDictionary();
+       
+    }
+    
+}
+
+
+
+class KeyNotFoundException extends Exception {}
+
+

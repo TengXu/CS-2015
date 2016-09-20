@@ -1,0 +1,185 @@
+/* File: StringStack.java
+ * Date: 2/26/2016
+ * Author:  Teng Xu
+ * Class: CS 112, Spring 2016
+ * Purpose: This is the template for HW 06, Problem B.1 (lab problem)
+ */
+
+public class StringStack {
+    
+    private Node head = null; 
+    
+    private int size = 0; 
+    
+    public class Node { 
+        public String item; 
+        public Node next; 
+        
+        
+        // constructors 
+        public Node() { 
+            item = ""; 
+            next = null; 
+        } 
+        
+        public Node(String n) { 
+            item = n; 
+            next = null; 
+        } 
+        
+        public Node(String n, Node p) { 
+            item = n; 
+            next = p;         
+        } 
+    }
+    
+// your code here for push, pop, top, size, and isEmpty
+    
+    public String top(){
+      return head.item;
+    }
+    
+    public void push(String n) { 
+      Node q = new Node(n);
+      q.next = head;
+      head = q;
+      size++;
+    } 
+    
+    public boolean isEmpty() { 
+      return(size == 0);
+    }  
+
+    public int size() {    
+      return size;
+    }        
+
+    public String pop() {         
+      String tmp = head.item;   
+      head = head.next;   
+      size--;
+      return tmp; 
+    }  
+    
+    // Recursive implementation of toString
+    
+    // wrapper method: just calls recursive helper
+    public String toString() {
+        return "| " + toStringAux(head);
+    }
+    
+    // recursive helper method
+    private String toStringAux(Node p) {
+        if(p == null)
+            return "";
+        else
+            return toStringAux(p.next) + " " + p.item ;
+    }
+    
+    
+    
+    
+    
+    
+    
+    public static void main(String[] args) {
+        
+        StringStack S = new StringStack(); 
+        
+        System.out.println("\n[1] First test toString on empty StringStack... Should print out:"); 
+        System.out.println("| "); 
+        System.out.println(S); 
+        
+        // Use step-wise refinement to develop your program: Move the left comment marker "/*"
+        // down past one test at a time as you develop each of the methods
+        
+             
+        System.out.println("\n[2] Test size and isEmpty... Should print out:\n0  true"); 
+        System.out.println(S.size() + "  " + S.isEmpty()); 
+        
+        System.out.println("\n[3] Push 4 strings... Should print out:\n|  looney a is Trump"); 
+        S.push("looney");
+        S.push("a");
+        S.push("is");
+        S.push("Trump");
+        System.out.println(S);
+        
+        System.out.println("\n[4] Test size and isEmpty... Should print out:\n4  false"); 
+        System.out.println(S.size() + "  " + S.isEmpty()); 
+        
+        System.out.println("\n[5] Test top... Should print out:\nTrump"); 
+        try {
+            System.out.println(S.top());
+        }
+        catch(StackUnderflowException e) {
+            System.err.println("Stack Overflow!");
+        }
+        
+        System.out.println("\n[6] Pop and print... Should print out:\nTrump is a looney");
+        while(!S.isEmpty()) {
+            try {
+                String s = S.pop(); 
+                System.out.print(s+" ");
+            }
+            catch(StackUnderflowException e) {
+                System.err.println("Stack Overflow!");
+            }
+        }
+        System.out.println(); 
+        
+        
+        System.out.println("\n[7] Testing stack underflow with top... Should print out:");
+        System.err.println("Stack Overflow!");
+        try {
+            
+            System.out.print(S.top());
+        }
+        catch(StackUnderflowException e) {
+            System.err.println("Stack Overflow!");
+        }  
+        
+        System.out.println("\n[8] Testing stack underflow with pop... Should print out:");
+        System.err.println("Stack Overflow!");
+        try {
+            String s = S.pop(); 
+            System.out.print(s+" ");
+        }
+        catch(StackUnderflowException e) {
+            System.err.println("Stack Overflow!");
+        } 
+        
+        System.out.println("\n[9] Just for fun... Should print out a long String!");
+        try {
+            S.push("looney! ");
+            S.push("a ");
+            S.push("is ");
+            S.push("Trump ");
+            
+            String s = "";
+            while(!S.isEmpty())
+                s += S.pop();
+            
+            for(int i = 0; i < 5; ++i)
+                S.push(s);
+            S.push("\n");
+            
+            String t = "";
+            while(!S.isEmpty())
+                t += S.pop();
+            
+            for(int i = 0; i < 5; ++i)
+                S.push(t);
+            
+            while(!S.isEmpty())
+                System.out.println(S.pop());
+            
+        }
+        catch(StackUnderflowException e) {
+            System.err.println("Stack Overflow!");
+        }
+       
+    }
+}
+
+class StackUnderflowException extends Exception {}
+
