@@ -1,0 +1,5 @@
+George Washington,2,22,1732
+Abraham Lincoln,2,12,1809
+Susan B. Anthony,2,15,1820
+Franklin D. Roosevelt,1,30,1882
+Eleanor Roosevelt,10,11,1884

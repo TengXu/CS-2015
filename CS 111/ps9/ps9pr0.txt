@@ -1,0 +1,6 @@
+Name: Teng Xu
+E-mail: xt@bu.edu
+
+Personally speaking, the way computers operate and learn things is less flexible than the way humans do. What computers learn is relatively mechanical, while humans can process the information they learned in their own way. 
+
+I believe those machine-learning systems wil be able to overcome such problems in the future because with the development of technologies and continuous exploration, humans can create systems that are able to correct themselves.

@@ -1,0 +1,31 @@
+#
+# ps6pr3.txt (Problem Set 6, Problem 3, Tasks 1 and 2)
+#
+# Pseudorandom number generator
+#
+# name: Teng Xu
+# email: xt@bu.edu
+#
+# If you worked with a partner, put his or her contact info below:
+# partner's name:
+# partner's email:
+#
+# Your values for a and c when m == 100:
+#     a:21
+#     c:3
+#
+
+00   read r1           # input a
+01   read r2           # input c
+02   read r3           # input m
+03   read r4           # input x_0
+04   read r5           # input n
+05   mul r6 r4 r1      # r6 = r4 * r1
+06   add r7 r6 r2      # r7 = r6 + r2
+07   mod r8 r7 r3      # r8 = r7 % r3
+08   copy r4 r8        # put the value of r8 into r4
+09   write r4          # print r4
+10   addn r5 -1        # r5 = r5 - 1
+11   jeqz r5 13        # jump to line 13 if r5 == 0
+12   jumpn 05          # jump to line 05
+13   halt

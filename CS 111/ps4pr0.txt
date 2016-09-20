@@ -1,0 +1,5 @@
+Name: Teng Xu
+E-mail£ºxt@bu.edu
+
+I believe the ignorance of the large velocity figure is the most preventable contributing factor wthin the bug's origins. If the developers noticed that, they can find the bug before launch.
+I do not agree that uncovered the bug stated that software ¡°does not fail in the same sense as a mechanical system.¡± Because software is a comination of countless codes, even the smallest part will also affect the whole software.

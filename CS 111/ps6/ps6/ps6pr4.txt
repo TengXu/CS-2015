@@ -1,0 +1,35 @@
+#
+# ps6pr4.txt (Problem Set 6, Problem 4)
+#
+# The Fibonacci sequence
+#
+# name: Teng Xu
+# email:xt@bu.edu
+#
+# This is an individual-only problem.
+#
+
+00  read  r1        # take an input r1
+01  setn  r2 1      # set r2 = 1
+02  setn  r3 1      # set r3 = 1
+03  call  r14 10    # call the function in line 10
+04  halt
+05  nop
+06  nop
+07  nop
+08  nop
+09  nop
+10  write r2        # print r2
+11  write r3        # print r3
+12  add r5 r2 r3    # r5 = r2 + r3
+13  addn r1 -2      # r1 = r1 - 2
+14  jgtz r1 17      # jump to line 17 if r1 > 0
+15  write r5        # print r5
+16  jumpr r14       # jump to the line stored in r14
+17  add r4 r2 r3    # r4 = r2 + r3
+18  write r4        # print r4
+19  copy r2 r3      # put the value of r3 into r2
+20  copy r3 r4      # put the value of r4 into r3
+21  addn r1 -1      # r1 = r1 - 1
+22  add r5 r5 r4    # r5 = r5 + r4
+23  jumpn 14        # jump to line 14

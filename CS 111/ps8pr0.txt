@@ -1,0 +1,4 @@
+Name: Teng Xu
+E-mail: xt@bu.edu
+
+Personally speaking, pursuing a strategy of evolving programs to solve problems has a lot of benefits in the long run. Once we know a strategy of evolving programs to solve various problems, we can solve different problems easily by using that strategy. While sometimes that strategy may be not the best solution to solve some specific problems, it still can give us some instructions on how to deal with such problems. Writing programs for a specific task sometimes is fast and easy, but it is not beneficial for the future development. 

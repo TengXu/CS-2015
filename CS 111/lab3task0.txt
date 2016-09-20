@@ -1,0 +1,10 @@
+mystery(1,32)
+mystery(1,32) = a + mystery(2,16)
+mystery(2,16) = a + mystery(4,8)
+mystery(4,8) = a + mystery(8,4)
+mystery(8,4) = 4
+mystery(4,8) = 8
+mystery(2,16) = 10
+mystery(1,32) = 11
+
+It will return 11.

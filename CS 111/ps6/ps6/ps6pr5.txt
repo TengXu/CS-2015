@@ -1,0 +1,37 @@
+#
+# ps6pr5.txt (Problem Set 6, Problem 5)
+#
+# Computing a power using recursion
+#
+# name: Teng Xu
+# email: xt@bu.edu
+#
+# If you worked with a partner, put his or her contact info below:
+# partner's name:
+# partner's email:
+#
+
+00 read r1         # get # from user and store it in r1
+01 read r2         # get # from user and store it in r2
+02 setn r15 100    # set 100 into r15
+03 call r14 06     # call the function strated in line 06
+04 write r13       # print the value of r13
+05 halt
+06 copy r13 r1     # r13 = r1
+07 jnez r2 10      # jump to line 10 if r2 != 0
+08 setn r13 1      # set r13 = 1
+09 jumpr r14       # jump to address stored in r14
+10 addn r15 1      # r15 = r15 +1
+11 storer r2 r15   # r15 = r2
+12 addn r15 1      # r15 = r15 +1
+13 storer r14 r15  # r15 = r14
+14 nop             #
+15 addn r2 -1      # r2 = r2 - 1
+16 call r14 07     # call the function strated in line 07
+17 loadr r14 r15   # r14 = r15
+18 addn r15 -1     # r15 = r15 - 1
+19 loadr r2 r15    # r2 = r15
+20 addn r15 -1     # r15 = r15 - 1
+21 nop
+22 mul r13 r13 r1  # r13 = r13 * r1
+23 jumpr r14       # jump to address stored in r14

@@ -1,0 +1,25 @@
+#
+# ps6pr2.txt (Problem Set 6, Problem 2)
+#
+# Computing a power by looping
+#
+# name: Teng Xu
+# email: xt@bu.edu
+#
+# If you worked with a partner, put his or her contact info below:
+# partner's name:
+# partner's email:
+#
+00 read r1      # get # from user and store it in r1
+01 read r2      # get # from user and store it in r2
+02 copy r3 r1   # let r3 = r1
+03 jeqz r1 10   # jump to 10 if r1 is equal to 0
+04 jeqz r2 10   # jump to 10 if r2 is equal to 0
+05 addn r2 -1   # r2 = r2 - 1
+06 jeqz r2 11   # jump to 11 if r2 is equal to 0
+07 mul r1 r1 r3 # r1 = r1 * r3
+08 addn r2 -1   # r2 = r2 + (-1)
+09 jumpn 06     # jump back to line 06
+10 setn r1 1    # set r1 = 1
+11 write r1     # print the value of r1
+12 halt

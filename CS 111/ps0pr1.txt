@@ -1,0 +1,14 @@
+Name: Teng Xu
+E-mail: xt@bu.edu
+
+0 x*** -> n 0
+0 nx*x -> e 0
+
+0 nex* -> w 1
+1 *xx* -> w 1
+
+1 *xwx -> s 2
+2 *x** -> e 2
+
+2 xexx -> s 1
+1 xex* -> w 1

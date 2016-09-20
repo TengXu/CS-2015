@@ -1,0 +1,62 @@
+Name: Teng Xu
+E-mail: xt@bu.edu
+
+1.Global scope
+
+  c  |  d
+-----------
+  2  |  1
+  2  |  4
+  15 |  4
+
+Local scope
+  c  |  d
+-----------
+  2  |  1
+  3  |  1
+  3  |  4
+  2  |  2
+  4  |  2
+  4  |  7
+  2  |  4
+  6  |  4
+  6  |  13
+
+crazy:3 4
+2 4
+crazy:4 7
+2 4
+crazy:6 13
+15 4
+
+
+2.Global scope
+
+  a  |  b
+-----------
+  3  |  2
+  3  |  4
+  16 |  4 
+
+Local scope(wow)
+
+  a  |  b
+-----------
+  2  |  4
+  3  |  6
+  5  |  10
+
+Local scope(yay)
+  a  |  b
+-----------
+     |  3
+ 16  |  3
+
+     
+
+wow:2 4
+3 4
+wow:3 6
+wow:5 10
+yay:16 3
+16 4

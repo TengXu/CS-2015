@@ -1,0 +1,22 @@
+Name: Teng Xu
+E-mail: xt@bu.edu
+
+0 xe** -> n 0
+0 *x** -> e 1
+0 newx -> s 3
+0 nexx -> w 2
+
+1 *x*s -> e 1
+1 xe*s -> n 0
+1 nexs -> w 2
+1 ***x -> s 3
+
+2 n*x* -> w 2
+2 nxws -> e 1
+2 x*** -> n 0
+2 n*wx -> s 3
+
+3 **wx -> s 3
+3 xews -> n 0
+3 x*x* -> w 2
+3 xxws -> e 1
